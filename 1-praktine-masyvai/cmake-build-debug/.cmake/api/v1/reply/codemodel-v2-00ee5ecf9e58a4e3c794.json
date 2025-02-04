@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.29"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "1_praktine_masyvai",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "1_praktine_masyvai::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-1_praktine_masyvai-Debug-8c1cb6bbf81ce5b2c6ef.json",
+					"name" : "1_praktine_masyvai",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/s056857/Desktop/Darbai/algoritmai-duomenu-strukturos/1-praktine-masyvai/cmake-build-debug",
+		"source" : "C:/Users/s056857/Desktop/Darbai/algoritmai-duomenu-strukturos/1-praktine-masyvai"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
