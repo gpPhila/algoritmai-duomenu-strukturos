@@ -1,0 +1,3 @@
+D:/coding/algoritmai-duomenu-strukturos/praktine-paskaita-sarasai/cmake-build-debug/CMakeFiles/praktine_paskaita_sarasai.dir
+D:/coding/algoritmai-duomenu-strukturos/praktine-paskaita-sarasai/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/coding/algoritmai-duomenu-strukturos/praktine-paskaita-sarasai/cmake-build-debug/CMakeFiles/rebuild_cache.dir
