@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/s056857/Desktop/Darbai/algoritmai-duomenu-strukturos/1-praktine-masyvai
+# Install script for directory: D:/coding/algoritmai-duomenu-strukturos/1-praktine-masyvai
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Program Files/JetBrains/CLion 2024.2.0.1/bin/mingw/bin/objdump.exe")
+  set(CMAKE_OBJDUMP "D:/coding/CLion/CLion 2024.2.1/bin/mingw/bin/objdump.exe")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/s056857/Desktop/Darbai/algoritmai-duomenu-strukturos/1-praktine-masyvai/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/coding/algoritmai-duomenu-strukturos/1-praktine-masyvai/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
