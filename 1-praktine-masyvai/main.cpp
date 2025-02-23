@@ -66,6 +66,8 @@ int main() {
         cout << "Sandauga elementu tarp didziausio ir maziausio: " << sandauga << endl;
     }
 
+    //masyvo rusiavimas didejimo tvarka
+    //tarsi "push'inam" didziausius elementus i gala kol didziausias nebus pask vietoje masyve
     for (int i = 0; i < masyvoDydis - 1; i++) {
         for (int j = 0; j < masyvoDydis - i - 1; j++) {
             if (masyvas1[j] > masyvas1[j + 1]) {
