@@ -103,10 +103,11 @@ void sumaPoPirmoNeig(int *&masyvas, int &dydis) {
 
     if (pirmNeigElemIndex == -1) {
         cout << "Nera neigiamu elementu." << endl;
+        cout<<endl;
         return;
     }
 
-    cout<<"Pirmo neigiamo elemento INDEKSAS: "<<pirmNeigElemIndex<<endl;
+    //cout<<"Pirmo neigiamo elemento INDEKSAS: "<<pirmNeigElemIndex<<endl;
 
     int suma = 0;
     for (int i = pirmNeigElemIndex + 1; i < dydis; i++) {
@@ -117,5 +118,33 @@ void sumaPoPirmoNeig(int *&masyvas, int &dydis) {
     cout<<endl;
 }
 
+void suspaustiMasyva(int *&masyvas, int &dydis) {
+    cout<<"Pasirinkimas: Suspausti masyva."<<endl;
+    cout<<"Masyvo duomenys:"<<endl;
+    for (int i = 0; i < dydis; i++) {
+        cout<<masyvas[i]<<" ";
+    }
+    cout<<endl;
 
+    cout<<"Iveskite skaicius, kuriu intervale bus panaikinti elementai (per tarpa) [a; b]: "<<endl;
+    int a, b;
+    cin>>a>>b;
 
+    int dydisNaujas = 0;
+    for (int i = 0; i < dydis; i++) {
+        if (masyvas[i] < a || masyvas[i] > b) {
+            masyvas[dydisNaujas] = masyvas[i];
+            dydisNaujas++;
+        }
+    }
+
+    for (int i = dydisNaujas; i < dydis; i++) {
+        masyvas[i] = 0;
+    }
+
+    cout<<"Atnaujinti masyvo duomenys:"<<endl;
+    for (int i = 0; i < dydis; i++) {
+        cout<<masyvas[i]<<" ";
+    }
+    cout<<endl;
+}
