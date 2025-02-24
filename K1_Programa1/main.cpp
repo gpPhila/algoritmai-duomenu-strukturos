@@ -3,7 +3,9 @@ using namespace std;
 
 void masyvoIvedimas(int *&masyvas, int &dydis);
 void masyvoIsvedimas(int *&masyvas, int &dydis);
-void rastiMazIndex (int *&masyvas, int &dydis);
+void rastiMazIndex(int *&masyvas, int &dydis);
+void sumaPoPirmoNeig(int *&masyvas, int &dydis);
+void suspaustiMasyva(int *&masyvas, int &dydis);
 
 int main()
 {
@@ -30,6 +32,12 @@ int main()
             case 3: rastiMazIndex(masyvas, dydis);
             break;
 
+            case 4: sumaPoPirmoNeig(masyvas, dydis);
+            break;
+
+            case 5: suspaustiMasyva(masyvas, dydis);
+            break;
+
             case 6: cout<<"Viso gero."<<endl;
             break;
 
@@ -45,7 +53,7 @@ void masyvoIvedimas(int *&masyvas, int &dydis) {
 
     cout<<"Iveskite masyvo dydi: ";
     cin>>dydis;
-    masyvas = new int[dydis]; // Dynamic memory allocation
+    masyvas = new int[dydis];
 
     cout<<"Iveskite masyvo duomenis (per tarpa): "<<endl;
     for (int i = 0; i < dydis; i++) {
@@ -68,6 +76,46 @@ void masyvoIsvedimas(int *&masyvas, int &dydis) {
 }
 
 void rastiMazIndex(int *&masyvas, int &dydis) {
-    
+    int mazElementas = abs(masyvas[0]);
+    int mazIndex = 0;
+    cout<<"Pasirinkimas: Rasti maziausia pagal absoliucia reiksme elemento indeksa."<<endl;
+
+    for (int i = 0; i < dydis; i++) {
+        if (abs(masyvas[i]) < mazElementas) {
+            mazElementas = masyvas[i];
+            mazIndex = i;
+        }
+    }
+    cout<<"Maziauso elemento pagal absoliucia reiksme INDEKSAS: "<<mazIndex<<endl;
+    cout<<endl;
 }
+
+void sumaPoPirmoNeig(int *&masyvas, int &dydis) {
+    int pirmNeigElemIndex = -1;
+    cout<<"Pasirinkimas: Suma pagal absoliucia reiksme elementu, esanciu po pirmojo neigiamo elemento."<<endl;
+
+    for (int i = 0; i < dydis; i++) {
+        if (masyvas[i] < 0) {
+            pirmNeigElemIndex = i;
+            break;
+        }
+    }
+
+    if (pirmNeigElemIndex == -1) {
+        cout << "Nera neigiamu elementu." << endl;
+        return;
+    }
+
+    cout<<"Pirmo neigiamo elemento INDEKSAS: "<<pirmNeigElemIndex<<endl;
+
+    int suma = 0;
+    for (int i = pirmNeigElemIndex + 1; i < dydis; i++) {
+        suma += abs(masyvas[i]);
+    }
+
+    cout<<"Suma: "<<suma<<endl;
+    cout<<endl;
+}
+
+
 
