@@ -11,6 +11,7 @@ void ivedimasSarasas();
 void isvedimasSaraso();
 void mazElementas();
 void sumaIkiPirmNulElem();
+void sarasoTvarkymas();
 
 int main()
 {
@@ -21,7 +22,7 @@ int main()
         cout<<"2. Saraso isdevimas."<<endl;
         cout<<"3. Rasti maziausia pagal absoliucia reiksme elementa."<<endl;
         cout<<"4. Rasti suma pagal absoliucia reiksme elementu, iki pirmojo lygaus 0 elemento."<<endl;
-        cout<<"5. Suspausti masyva."<<endl;
+        cout<<"5. Saraso tvarkymas: pirmoje puseje - lyginiai indeksai (iskaitant 0), antroje puseje - nelyginiai."<<endl;
         cout<<"6. Iseiti."<<endl;
         cin>>pasirinkimas;
 
@@ -36,6 +37,9 @@ int main()
             break;
 
             case 4: sumaIkiPirmNulElem();
+            break;
+
+            case 5: sarasoTvarkymas();
             break;
 
             case 6: cout<<"Viso gero."<<endl;
@@ -114,5 +118,49 @@ void sumaIkiPirmNulElem() {
         temp = temp->kitas; //kad eitu toliau
     }
     cout<<"Suma elementu iki pirmojo lygaus 0 elemento: "<<suma<<endl;
+    cout<<endl;
+}
+
+void sarasoTvarkymas() {
+    cout << "Pasirinkimas: Saraso tvarkymas: pirmoje puseje - lyginiai indeksai (iskaitant 0), antroje puseje - nelyginiai." << endl;
+
+    sarasas *lygPradzia = nullptr, *lygPabaiga = nullptr;
+    sarasas *nelygPradzia = nullptr, *nelygPabaiga = nullptr;
+    sarasas *temp = pradzia;
+    int index = 0;
+
+    while (temp) {
+        if (index % 2 == 0) { //t.y. lyginiai skaiciai
+            if (!lygPradzia) {
+                lygPradzia = lygPabaiga = temp;
+            }
+            else {
+                lygPabaiga->kitas = temp;
+                lygPabaiga = lygPabaiga->kitas;
+            }
+        } else {
+            if (!nelygPradzia) {
+                nelygPradzia = nelygPabaiga = temp;
+            }
+            else {
+                nelygPabaiga->kitas = temp;
+                nelygPabaiga = nelygPabaiga->kitas;
+            }
+        }
+        temp = temp->kitas;
+        index++;
+    }
+
+    pradzia = lygPradzia;
+    lygPabaiga->kitas = nelygPradzia; // suliejam sarasus
+    nelygPabaiga->kitas = nullptr;
+
+    cout << "Atnaujinti saraso duomenys: "<<endl;
+    sarasas *pr=pradzia;
+    while (pr !=NULL) {
+        cout<< pr->duom<<" ";
+        pr=pr->kitas;
+    }
+    cout<<endl;
     cout<<endl;
 }
