@@ -1,0 +1,3 @@
+D:/coding/algoritmai-duomenu-strukturos/praktine-dvikryptis-sarasas/cmake-build-debug/CMakeFiles/praktine_dvikryptis_sarasas.dir
+D:/coding/algoritmai-duomenu-strukturos/praktine-dvikryptis-sarasas/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/coding/algoritmai-duomenu-strukturos/praktine-dvikryptis-sarasas/cmake-build-debug/CMakeFiles/rebuild_cache.dir
