@@ -64,6 +64,7 @@ int main() {
         //atnaujina pirmyn rodykle kad ji rodytu i naujaspries
     } else {
         pradzia=naujasPries;
+        naujasPries->atgal=nullptr;
     }
     temp->atgal = naujasPries;
     //we stole atgal from the temp element, so it needs to point somewhere
@@ -96,6 +97,7 @@ int main() {
         tempPo->pirmyn->atgal = naujasPo;
     } else {
         pabaiga=naujasPo;
+        naujasPo->pirmyn=nullptr;
     }
     tempPo->pirmyn=naujasPo;
 
@@ -106,6 +108,58 @@ int main() {
         pr = pr->pirmyn;
     }
     cout<<endl;
+
+    //-------------------------elemento salinimas--------------------------------
+
+    cout<<"Koki elementa norite pasalinti?"<<endl;
+    int delElem;
+    cin>>delElem;
+
+    dviKrypSarasas *tempDel = pradzia;
+    while (tempDel && tempDel->duom != delElem) {
+        tempDel = tempDel->pirmyn;
+    }
+
+    if (tempDel) {
+        if (tempDel->pirmyn) {
+            tempDel->pirmyn->atgal = tempDel->atgal;
+        } else {
+            pabaiga=tempDel->atgal;
+            pabaiga->pirmyn=nullptr;
+        }
+        if (tempDel->atgal) {
+            tempDel->atgal->pirmyn= tempDel->pirmyn;
+        } else {
+            pradzia=tempDel->pirmyn;
+            pradzia->atgal=nullptr;
+        }
+        delete tempDel;
+    } else {
+        cout<<"Tokio elemento nera."<<endl;
+    }
+
+    cout<<endl;
+    cout<<"Atnaujintas sarasas:"<<endl;
+    pr = pradzia;
+    while (pr) {
+        cout<<pr->duom<<" ";
+        pr = pr->pirmyn;
+    }
+    cout<<endl;
+
+    //-----------------didziausio elemento radimas-------------------------
+
+    dviKrypSarasas *didElem = pradzia;
+    int didElemReiksme = didElem->duom;
+
+    while (didElem) {
+        if (didElem->duom > didElemReiksme) {
+            didElemReiksme = didElem ->duom;
+        }
+        didElem = didElem -> pirmyn;
+        //taip mes einame toliau
+    }
+    cout<<"Didziausias elementas yra: "<<didElemReiksme<<endl;
 
     return 0;
 }
