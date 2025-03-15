@@ -1,0 +1,3 @@
+D:/coding/algoritmai-duomenu-strukturos/praktine-ciklinis-sarasas-stekas/cmake-build-debug/CMakeFiles/praktine_ciklinis_sarasas_stekas.dir
+D:/coding/algoritmai-duomenu-strukturos/praktine-ciklinis-sarasas-stekas/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/coding/algoritmai-duomenu-strukturos/praktine-ciklinis-sarasas-stekas/cmake-build-debug/CMakeFiles/rebuild_cache.dir

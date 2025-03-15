@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.29"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "praktine_ciklinis_sarasas_stekas",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "praktine_ciklinis_sarasas_stekas::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-praktine_ciklinis_sarasas_stekas-Debug-077017b4e01baf8df938.json",
+					"name" : "praktine_ciklinis_sarasas_stekas",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/coding/algoritmai-duomenu-strukturos/praktine-ciklinis-sarasas-stekas/cmake-build-debug",
+		"source" : "D:/coding/algoritmai-duomenu-strukturos/praktine-ciklinis-sarasas-stekas"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
