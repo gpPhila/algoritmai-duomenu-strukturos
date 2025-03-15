@@ -39,7 +39,7 @@ int main() {
     }
     cout<<endl;
 
-    //--------------------------elementu iterpimas---------------------------------
+    //--------------------------elementu iterpimas PRIES---------------------------------
 
     cout<<"PRIES koki elementa norite iterpti nauja?"<<endl;
     int priesElem, naujaReiksme;
@@ -54,12 +54,19 @@ int main() {
         temp = temp->pirmyn;
     }
 
-    dviKrypSarasas *naujasPries = new dviKrypSarasas{temp, naujaReiksme, temp};
+    dviKrypSarasas *naujasPries = new dviKrypSarasas{temp, naujaReiksme, temp->atgal};
+    //jeigu buvo 2 ir 3 ir norim iterpti 5, dabar temp->atgal =2, todel darome atgal=[temp->atgal]
     if (temp->atgal) {
+        //patikrina ar yra elementas pries temp
         temp->atgal->pirmyn = naujasPries;
+        //[temp->atgal] is basically 2
+        //pirmyn dvejeto rodys i naujasPries
+        //atnaujina pirmyn rodykle kad ji rodytu i naujaspries
     } else {
         pradzia=naujasPries;
     }
+    temp->atgal = naujasPries;
+    //we stole atgal from the temp element, so it needs to point somewhere
 
     cout<<"Atnaujintas sarasas:"<<endl;
     pr = pradzia;
@@ -68,5 +75,37 @@ int main() {
         pr = pr->pirmyn;
     }
     cout<<endl;
+
+    //--------------------------elementu iterpimas PO---------------------------------
+
+    cout<<"PO kokio elemento norite iterpti nauja?"<<endl;
+    int poElem, pnaujaReiksme;
+    cin>>poElem;
+    cout<<"Iveskite naujo elemento reiksme: "<<endl;
+    cin>>pnaujaReiksme;
+
+    dviKrypSarasas *tempPo = pradzia;
+    while (tempPo && tempPo->duom != poElem) {
+        //keep replaying the loop for as long as "tempPo" is alive lol
+        //and for as long as "duom" isn't "poElem"
+        tempPo = tempPo->pirmyn;
+    }
+
+    dviKrypSarasas *naujasPo = new dviKrypSarasas{tempPo->pirmyn, pnaujaReiksme, tempPo};
+    if (tempPo->pirmyn) {
+        tempPo->pirmyn->atgal = naujasPo;
+    } else {
+        pabaiga=naujasPo;
+    }
+    tempPo->pirmyn=naujasPo;
+
+    cout<<"Atnaujintas sarasas:"<<endl;
+    pr = pradzia;
+    while (pr) {
+        cout<<pr->duom<<" ";
+        pr = pr->pirmyn;
+    }
+    cout<<endl;
+
     return 0;
 }
