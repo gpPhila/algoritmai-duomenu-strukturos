@@ -15,8 +15,17 @@ struct ciklinisSarasas {
 };
 ciklinisSarasas *pradziaCikl = nullptr;
 
+struct stekas {
+    int duom;
+    stekas *kitas;
+};
+
+stekas *pradziaStekas;
+
 void lygSkaiciai (dvikryptSarasas *pradzia);
 void ciklSarasoSpaudinimas (ciklinisSarasas *pradziaCikl);
+void nelygSkaiciai (dvikryptSarasas *pradzia);
+void stekoDuomenuSalinimas (stekas *pradziaStekas);
 
 int main()
 {
@@ -41,6 +50,8 @@ int main()
 
     lygSkaiciai(pradzia);
     ciklSarasoSpaudinimas(pradziaCikl);
+    nelygSkaiciai(pradzia);
+    stekoDuomenuSalinimas(pradziaStekas);
     return 0;
 }
 
@@ -79,3 +90,30 @@ void ciklSarasoSpaudinimas(ciklinisSarasas *pradziaCikl) {
     } while (temp != pradziaCikl);
     cout<<endl;
 }
+
+void nelygSkaiciai(dvikryptSarasas *pradzia) {
+    dvikryptSarasas *elem = pradzia;
+    while (elem) {
+        if (elem->duom % 2 != 0) {
+            stekas *newElem = new stekas;
+            newElem->duom = elem->duom;
+            newElem->kitas = pradziaStekas;
+            pradziaStekas = newElem;
+        }
+        elem = elem->pirmyn;
+    }
+}
+
+void stekoDuomenuSalinimas(stekas *pradziaStekas) {
+    cout<<"Steko duomenys pries salinima:"<<endl;
+
+    while (pradziaStekas) {
+        cout << pradziaStekas->duom << " ";
+        stekas *temp = pradziaStekas;
+        pradziaStekas = pradziaStekas->kitas;
+        delete temp;
+    }
+    cout << endl;
+    cout<<"Steko duomenys buvo pasalinti."<<endl;
+}
+
