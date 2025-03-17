@@ -295,4 +295,3 @@ void panaikintiMazUz() {
         firstIteration = false;
     } while (pradziaCikl != nullptr);
 }
-
