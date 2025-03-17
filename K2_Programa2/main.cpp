@@ -132,6 +132,7 @@ void didElementas() {
 }
 
 void iterpimasPries() {
+    cout<<"Pasirinkimas: Iterpti elementa PRIES pasirinkta elementa."<<endl;
     cout<<"PRIES koki elementa norite iterpti nauja?"<<endl;
     int priesElem, naujaReiksme;
     cin>>priesElem;
@@ -157,9 +158,11 @@ void iterpimasPries() {
         pries->kitas = naujasPries;
         naujasPries->kitas = temp;
     }
+    cout<<endl;
 }
 
 void iterpimasPo() {
+    cout<<"Pasirinkimas: Iterpti elementa PO pasirinkto elemento."<<endl;
     cout<<"PO kokio elemento norite iterpti nauja?"<<endl;
     int poElem, naujaReiksme;
     cin>>poElem;
@@ -181,9 +184,11 @@ void iterpimasPo() {
         naujasPo->kitas = temp->kitas;
         temp->kitas = naujasPo;
     }
+    cout<<endl;
 }
 
 void elementoSalinimas() {
+    cout<<"Pasirinkimas: Norimo elemento salinimas."<<endl;
     cout<<"Koki elementa norite pasalinti?"<<endl;
     int delElem;
     cin>>delElem;
@@ -205,9 +210,11 @@ void elementoSalinimas() {
         }
         delete temp;
     }
+    cout<<endl;
 }
 
 void nelygPerkelimas(sarasas *pradzia) {
+    cout<<"Pasirinkimas: Nelyginiu skaiciu perkelimas i vienkrypti ciklini sarasa."<<endl;
 
     sarasas *temp = pradzia;
     while (temp) {
@@ -239,6 +246,8 @@ void nelygPerkelimas(sarasas *pradzia) {
 }
 
 void didesniuUz() {
+    cout<<"Pasirinkimas: Apskaiciuoti kiek cikliniame sarase yra elementu didesniu uz 15."<<endl;
+
 
     if (!pradziaCikl) {
         cout << "Ciklinis sarasas yra tuscias." << endl;
@@ -260,38 +269,43 @@ void didesniuUz() {
 
 void panaikintiMazUz() {
     cout<<"Pasirinkimas: Panaikinti ciklinio saraso elementus, mazesnius uz 10."<<endl;
-    cout<<"Skaiciai, kurie bus panaikinti: "<<endl;
 
-    ciklinisSarasas *temp = pradziaCikl, *pask = nullptr;
-    bool firstIteration = true;
+    ciklinisSarasas *temp = pradziaCikl;
+    cout << "Pasalinti elementai: ";
 
-    do {
-        if (temp->duom < 10) {
-            cout<<temp->duom<<" ";
+    while (pradziaCikl && pradziaCikl->duom < 10) {
+        cout << pradziaCikl->duom << " ";
 
-            if (temp == pradziaCikl) {
-                // jeigu sarase yra tik vienas elementas
-                if (pradziaCikl->kitas == pradziaCikl) {
-                    pradziaCikl = nullptr;
-                } else {
-                    pradziaCikl = temp->kitas;
-                    pask->kitas = pradziaCikl;
-                }
-            } else {
-                pask->kitas = temp->kitas;
-            }
+        // jeigu tik vienas elementas
+        if (pradziaCikl->kitas == pradziaCikl) {
+            delete pradziaCikl;
+            pradziaCikl = nullptr;
+            cout << endl;
+            return;
+        }
 
-            ciklinisSarasas *deleteTemp = temp;
-            temp = temp -> kitas;
-            delete deleteTemp;
+        ciklinisSarasas *toDelete = pradziaCikl;
+        pradziaCikl = pradziaCikl->kitas;
+        ciklinisSarasas *last = pradziaCikl;
+        while (last->kitas != toDelete) {
+            last = last->kitas;
+        }
+        last->kitas = pradziaCikl;
+        delete toDelete;
+    }
+
+    temp = pradziaCikl;
+    while (temp && temp->kitas != pradziaCikl) {
+        if (temp->kitas->duom < 10) {
+            cout << temp->kitas->duom << " ";
+
+            ciklinisSarasas *toDelete = temp->kitas;
+            temp->kitas = temp->kitas->kitas;
+            delete toDelete;
         } else {
-            pask = temp;
             temp = temp->kitas;
         }
-        // Check if we have completed a full cycle
-        if (temp == pradziaCikl && !firstIteration) {
-            break;
-        }
-        firstIteration = false;
-    } while (pradziaCikl != nullptr);
+    }
+    cout << endl;
+    cout << endl;
 }
