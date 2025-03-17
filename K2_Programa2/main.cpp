@@ -260,15 +260,39 @@ void didesniuUz() {
 
 void panaikintiMazUz() {
     cout<<"Pasirinkimas: Panaikinti ciklinio saraso elementus, mazesnius uz 10."<<endl;
+    cout<<"Skaiciai, kurie bus panaikinti: "<<endl;
 
-    ciklinisSarasas *temp = pradziaCikl;
+    ciklinisSarasas *temp = pradziaCikl, *pask = nullptr;
+    bool firstIteration = true;
+
     do {
         if (temp->duom < 10) {
-            cout<<"Skaiciai, kurie bus panaikinti: "<<temp->duom<<" ";
+            cout<<temp->duom<<" ";
 
-            
+            if (temp == pradziaCikl) {
+                // jeigu sarase yra tik vienas elementas
+                if (pradziaCikl->kitas == pradziaCikl) {
+                    pradziaCikl = nullptr;
+                } else {
+                    pradziaCikl = temp->kitas;
+                    pask->kitas = pradziaCikl;
+                }
+            } else {
+                pask->kitas = temp->kitas;
+            }
+
+            ciklinisSarasas *deleteTemp = temp;
+            temp = temp -> kitas;
+            delete deleteTemp;
+        } else {
+            pask = temp;
+            temp = temp->kitas;
         }
-        temp = temp->kitas;
-    } while (temp != pradziaCikl);
+        // Check if we have completed a full cycle
+        if (temp == pradziaCikl && !firstIteration) {
+            break;
+        }
+        firstIteration = false;
+    } while (pradziaCikl != nullptr);
 }
 
