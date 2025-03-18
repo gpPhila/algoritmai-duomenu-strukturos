@@ -273,7 +273,51 @@ void panaikintiMazUz() {
     ciklinisSarasas *temp = pradziaCikl;
     cout << "Pasalinti elementai: ";
 
-    while (pradziaCikl && pradziaCikl->duom < 10) {
+    /// pasitikrinti pati pirma elementa
+    if (temp->duom < 10) {
+        cout << temp->duom<<" ";
+
+        //jeigu sarase tik vienas elementas (ir tai reiskia kad jis rodo ant saves)
+        if (pradziaCikl->kitas == pradziaCikl) {
+            delete pradziaCikl;
+            pradziaCikl = nullptr;
+            cout<<endl;
+            return;
+        }
+        ///reikia padaryti taip kad paskutinis elementas rodytu i dabar nauja pradziaCikl
+        ciklinisSarasas *toDelete = pradziaCikl;
+        pradziaCikl = pradziaCikl->kitas;
+
+        //ieskosim paskutini elementa, rodanti i pradziaCikl
+        ciklinisSarasas *pask = pradziaCikl;
+        while (pask->kitas != pradziaCikl) {
+            pask = pask->kitas;
+        }
+        pask->kitas = pradziaCikl; //dabar paskutinis elementas rodys i nauja pradziaCikl
+        delete toDelete;
+    }
+
+    //liko panaikinti likusius elementus, jeigu tokiu dar yra (mazesniu uz 10)
+
+    ciklinisSarasas *temp1 = pradziaCikl;
+    while (temp1) {
+        if (temp1->duom < 10) {
+            cout << temp1->duom<<" ";
+            ciklinisSarasas *toDelete = temp1;
+            temp1 = temp1->kitas;
+            delete toDelete;
+            //jeigu reikia panaikinti paskutini, pries ji esanti elementa reikia priristi prie pradziaCikl
+            if ( temp1->kitas == pradziaCikl) {
+                ciklinisSarasas *pask = temp1;
+                pask->kitas = pradziaCikl;
+                delete temp1;
+            }
+        }
+    }
+
+
+
+   /* while (pradziaCikl && pradziaCikl->duom < 10) {
         cout << pradziaCikl->duom << " ";
 
         // jeigu tik vienas elementas
@@ -306,6 +350,7 @@ void panaikintiMazUz() {
             temp = temp->kitas;
         }
     }
+    */
     cout << endl;
     cout << endl;
 }
