@@ -268,7 +268,68 @@ void didesniuUz() {
 }
 
 void panaikintiMazUz() {
-    cout<<"Pasirinkimas: Panaikinti ciklinio saraso elementus, mazesnius uz 10."<<endl;
+    cout << "Pasirinkimas: Panaikinti ciklinio saraso elementus, mazesnius uz 10." << endl;
+
+    cout << "Pasalinti elementai: ";
+
+    // Step 1: Remove starting elements if needed
+    while (pradziaCikl && pradziaCikl->duom < 10) {
+        cout << pradziaCikl->duom << " ";
+
+        if (pradziaCikl->kitas == pradziaCikl) {
+            delete pradziaCikl;
+            pradziaCikl = nullptr;
+            cout << endl;
+            return;
+        }
+
+        ciklinisSarasas *toDelete = pradziaCikl;
+        pradziaCikl = pradziaCikl->kitas;
+
+        // Find the last node
+        ciklinisSarasas *pask = pradziaCikl;
+        while (pask->kitas != toDelete) {
+            pask = pask->kitas;
+        }
+        pask->kitas = pradziaCikl;
+
+        delete toDelete;
+    }
+
+    // Step 2: Remove remaining elements in the list
+    ciklinisSarasas *temp1 = pradziaCikl;
+    ciklinisSarasas *prev = nullptr;
+    ciklinisSarasas *first = pradziaCikl;
+
+    do {
+        if (temp1->duom < 10) {
+            cout << temp1->duom << " ";
+            ciklinisSarasas *toDelete = temp1;
+
+            if (prev) {
+                prev->kitas = temp1->kitas;
+            }
+
+            temp1 = temp1->kitas;
+
+            if (toDelete == pradziaCikl) {
+                pradziaCikl = temp1;
+            }
+
+            delete toDelete;
+
+            if (pradziaCikl->kitas == pradziaCikl && pradziaCikl->duom < 10) {
+                delete pradziaCikl;
+                pradziaCikl = nullptr;
+                break;
+            }
+        } else {
+            prev = temp1;
+            temp1 = temp1->kitas;
+        }
+    } while (temp1 != first);
+
+    /*cout<<"Pasirinkimas: Panaikinti ciklinio saraso elementus, mazesnius uz 10."<<endl;
 
     ciklinisSarasas *temp = pradziaCikl;
     cout << "Pasalinti elementai: ";
@@ -313,8 +374,9 @@ void panaikintiMazUz() {
                 delete temp1;
             }
         }
+        temp1 = temp1->kitas;
     }
-
+    */
 
 
    /* while (pradziaCikl && pradziaCikl->duom < 10) {
