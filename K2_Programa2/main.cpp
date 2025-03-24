@@ -269,13 +269,13 @@ void didesniuUz() {
 
 void panaikintiMazUz() {
     cout << "Pasirinkimas: Panaikinti ciklinio saraso elementus, mazesnius uz 10." << endl;
-
     cout << "Pasalinti elementai: ";
 
-    // Step 1: Remove starting elements if needed
+    //pirmas elementas
     while (pradziaCikl && pradziaCikl->duom < 10) {
         cout << pradziaCikl->duom << " ";
 
+        //jeigu yra tik vienas elementas
         if (pradziaCikl->kitas == pradziaCikl) {
             delete pradziaCikl;
             pradziaCikl = nullptr;
@@ -286,17 +286,15 @@ void panaikintiMazUz() {
         ciklinisSarasas *toDelete = pradziaCikl;
         pradziaCikl = pradziaCikl->kitas;
 
-        // Find the last node
+        //ieskome paskutini elementa kad galetume ji priristi prie naujo pradziaCikl
         ciklinisSarasas *pask = pradziaCikl;
         while (pask->kitas != toDelete) {
             pask = pask->kitas;
         }
         pask->kitas = pradziaCikl;
-
         delete toDelete;
     }
 
-    // Step 2: Remove remaining elements in the list
     ciklinisSarasas *temp1 = pradziaCikl;
     ciklinisSarasas *prev = nullptr;
     ciklinisSarasas *first = pradziaCikl;
@@ -306,10 +304,10 @@ void panaikintiMazUz() {
             cout << temp1->duom << " ";
             ciklinisSarasas *toDelete = temp1;
 
+            //elementas salinamas, todel pries ji esancio elemento *kitas turi buti atnaujintas
             if (prev) {
                 prev->kitas = temp1->kitas;
             }
-
             temp1 = temp1->kitas;
 
             if (toDelete == pradziaCikl) {
@@ -318,16 +316,22 @@ void panaikintiMazUz() {
 
             delete toDelete;
 
-            if (pradziaCikl->kitas == pradziaCikl && pradziaCikl->duom < 10) {
-                delete pradziaCikl;
-                pradziaCikl = nullptr;
-                break;
-            }
+            //jeigu joks elementas nebuvo pasalintas, judame prie kito elemento patikrinimo
         } else {
             prev = temp1;
             temp1 = temp1->kitas;
         }
     } while (temp1 != first);
+    cout << endl;
+    cout<<"Atnaujintas ciklinis sarasas: "<<endl;
+
+    ciklinisSarasas *temp2 = pradziaCikl;
+    do {
+        cout << temp2->duom << " ";
+        temp2 = temp2->kitas;
+    } while (temp2 != pradziaCikl);
+    cout<<endl;
+    cout << endl;
 
     /*cout<<"Pasirinkimas: Panaikinti ciklinio saraso elementus, mazesnius uz 10."<<endl;
 
@@ -413,6 +417,4 @@ void panaikintiMazUz() {
         }
     }
     */
-    cout << endl;
-    cout << endl;
 }
