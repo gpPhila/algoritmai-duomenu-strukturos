@@ -1,0 +1,3 @@
+D:/Coding/algoritmai-duomenu-strukturos/sav-medis/cmake-build-debug/CMakeFiles/sav_medis.dir
+D:/Coding/algoritmai-duomenu-strukturos/sav-medis/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Coding/algoritmai-duomenu-strukturos/sav-medis/cmake-build-debug/CMakeFiles/rebuild_cache.dir
