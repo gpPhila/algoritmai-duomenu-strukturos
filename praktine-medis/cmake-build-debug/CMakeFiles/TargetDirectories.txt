@@ -1,0 +1,3 @@
+C:/Users/s056857/Desktop/algorit-duom-strukt/algoritmai-duomenu-strukturos/praktine-medis/cmake-build-debug/CMakeFiles/praktine_medis.dir
+C:/Users/s056857/Desktop/algorit-duom-strukt/algoritmai-duomenu-strukturos/praktine-medis/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/s056857/Desktop/algorit-duom-strukt/algoritmai-duomenu-strukturos/praktine-medis/cmake-build-debug/CMakeFiles/rebuild_cache.dir
