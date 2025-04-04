@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/s056857/Desktop/algorit-duom-strukt/algoritmai-duomenu-strukturos/praktine-medis/cmake-build-debug",
-		"source" : "C:/Users/s056857/Desktop/algorit-duom-strukt/algoritmai-duomenu-strukturos/praktine-medis"
+		"build" : "D:/Coding/algoritmai-duomenu-strukturos/praktine-medis/cmake-build-debug",
+		"source" : "D:/Coding/algoritmai-duomenu-strukturos/praktine-medis"
 	},
 	"version" : 
 	{

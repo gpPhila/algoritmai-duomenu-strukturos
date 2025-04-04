@@ -18,7 +18,7 @@ medis *naujas_elementas(string pavarde) {
 }
 
 void iterpimas (medis*& saknis);
-void paieska ();
+void paieska (medis *saknis);
 void spausdinimas (medis *saknis);
 void salinimas ();
 
@@ -38,6 +38,9 @@ int main() {
             case 1: iterpimas(saknis);
             break;
 
+            case 2: paieska(saknis);
+            break;
+
             case 3: spausdinimas(saknis);
             break;
 
@@ -52,15 +55,35 @@ void iterpimas(medis*& saknis) {
     cout<<"Iveskite pavarde: ";
     cin>>pavarde;
 
+    medis* naujas = naujas_elementas(pavarde);
+
+    //jeigu pavardziu dar nera, pirma ivesta pavarde tampa saknimi
     if (saknis ==NULL) {
-        saknis = naujas_elementas(pavarde);
+        saknis = naujas;
         return;
     }
 
-    if (pavarde < saknis->data) {
-        iterpimas(saknis->kaire);
+    //jeigu saknis buvo pere, tai dabar dabartinis - pere
+    medis* dabartinis = saknis;
+    medis* tevai = NULL;
+
+    //ieskos laisva vieta (kaire arba desine, laisva vieta vaikui irasyti nzn)
+    while (dabartinis != NULL) {
+
+        //pridedant nauja pavarde, pries tai buvusi tampa tevu
+        tevai = dabartinis;
+        if (pavarde < dabartinis->data) {
+            dabartinis = dabartinis->kaire;
+        } else {
+            dabartinis = dabartinis->desine;
+        }
+    }
+
+    //pagaliau prideda pavarde i medi
+    if (pavarde < tevai->data) {
+        tevai->kaire = naujas;
     } else {
-        iterpimas(saknis->desine);
+        tevai->desine = naujas;
     }
 }
 
@@ -72,3 +95,34 @@ void spausdinimas(medis *saknis) {
     }
 }
 
+void paieska (medis *saknis) {
+
+    if (saknis == NULL) {
+        cout<<"Jokiu pavardziu dar nebuvo ivesta."<<endl;
+        return;
+    }
+
+    string ieskPav;
+    cout<<"Kokia pavarde ieskome?"<<endl;
+    cin>>ieskPav;
+
+    medis* dabartinis = saknis;
+    medis* tevai = NULL;
+
+    while (dabartinis != NULL) {
+
+        if (ieskPav == dabartinis->data) {
+            cout << "Pavarde rasta!" << endl;
+            return;
+        }
+
+        tevai = dabartinis;
+        if (ieskPav < dabartinis -> data) {
+           dabartinis = dabartinis -> kaire;
+        } else {
+            dabartinis = dabartinis -> desine;
+        }
+    }
+
+    cout<<"Pavardes nera."<<endl;
+}
