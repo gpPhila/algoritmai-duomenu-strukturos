@@ -155,7 +155,6 @@ void salinimas (medis*& saknis) {
 
     while (dabartinis != NULL) {
         if (pasalinPav == dabartinis->data) {
-
             //jeigu elementas neturi vaiku
             if (dabartinis -> kaire == NULL && dabartinis -> desine == NULL) {
                 if (dabartinis==saknis) {
@@ -169,8 +168,63 @@ void salinimas (medis*& saknis) {
                     tevas->desine = NULL;
                 }
             }
+            cout<<"blah"<<endl;
+            cout<<"Pavarde buvo pasalinta!"<<endl;
+        }
+        /*
+        //jeigu yra bent vienas vaikas kaireje puseje
+            if (dabartinis -> kaire !=NULL && dabartinis -> desine == NULL) {
+                if (dabartinis == saknis) {
+                    medis* temp = saknis;
+                    saknis = saknis->kaire;
+                    delete temp;
+                } else if (tevas->kaire == dabartinis) {
+                    tevas->kaire = dabartinis->kaire;
+                    delete dabartinis;
+                } else {
+                    tevas->desine = dabartinis->kaire;
+                }
+                cout<<"Pavarde buvo pasalinta!"<<endl;
+                return;
+            }
+
+        //jeigu yra bent vienas vaikas desineje puseje
+        if (dabartinis -> kaire == NULL && dabartinis -> desine != NULL) {
+            if (dabartinis == saknis) {
+                medis* temp = saknis;
+                saknis = saknis->desine;
+                delete temp;
+            } else if (tevas->desine == dabartinis) {
+                tevas->desine = dabartinis->desine;
+                delete dabartinis;
+            } else {
+                tevas->kaire = dabartinis->desine;
+            }
+            cout<<"Pavarde buvo pasalinta!"<<endl;
             return;
         }
+        */
+
+        //jeigu yra bent vienas vaikas
+        else if (dabartinis->kaire == NULL || dabartinis->desine == NULL) {
+
+            //paaiskinimas: condition ? expression_if_true : expression_if_false;
+            medis* temp = (dabartinis->kaire != NULL) ? dabartinis->kaire : dabartinis->desine;
+            cout<<"Naikinama pavarde: "<<dabartinis->data<<endl;
+
+            if (dabartinis == saknis) {
+                saknis = temp;
+            } else if (tevas->kaire == dabartinis) {
+                tevas->kaire = temp;
+            } else {
+                tevas->desine = temp;
+            }
+            delete dabartinis;
+            // PRIDETI JEIGU DU VAIKAI YRA
+            cout << "Pavarde buvo pasalinta!" << endl;
+            return;
+        }
+
         tevas = dabartinis;
         if (pasalinPav < dabartinis -> data) {
             dabartinis = dabartinis -> kaire;
@@ -178,5 +232,5 @@ void salinimas (medis*& saknis) {
             dabartinis = dabartinis -> desine;
         }
     }
-    cout<<"Pavarde buvo pasalinta!"<<endl;
+    cout << "Tokios pavardes nebuvo ivesta." << endl;
 }
