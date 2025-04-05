@@ -17,10 +17,19 @@ medis *naujas_elementas(string pavarde) {
     return p;
 }
 
+medis *rasti_max(medis *saknis) {
+    if (saknis==NULL) {
+        return NULL;
+    } else if (saknis -> desine!=NULL) {
+        return rasti_max(saknis -> desine);
+    }
+    return saknis;
+}
+
 void iterpimas (medis*& saknis);
 void paieska (medis *saknis);
 void spausdinimas (medis *saknis);
-void salinimas ();
+void salinimas (medis*& saknis);
 
 int main() {
     medis* saknis = NULL;
@@ -42,6 +51,12 @@ int main() {
             break;
 
             case 3: spausdinimas(saknis);
+            break;
+
+            case 4: salinimas(saknis);
+            break;
+
+            case 5: cout<<"Jus isejote is meniu. Viso gero!"<<endl;
             break;
 
             default: cout<<"Oopsie woopsie."<<endl;
@@ -88,6 +103,7 @@ void iterpimas(medis*& saknis) {
 }
 
 void spausdinimas(medis *saknis) {
+
     if (saknis != NULL) {
         spausdinimas(saknis->kaire);
         cout<<saknis->data<<endl;
@@ -96,7 +112,6 @@ void spausdinimas(medis *saknis) {
 }
 
 void paieska (medis *saknis) {
-
     if (saknis == NULL) {
         cout<<"Jokiu pavardziu dar nebuvo ivesta."<<endl;
         return;
@@ -107,7 +122,6 @@ void paieska (medis *saknis) {
     cin>>ieskPav;
 
     medis* dabartinis = saknis;
-    medis* tevai = NULL;
 
     while (dabartinis != NULL) {
 
@@ -116,7 +130,6 @@ void paieska (medis *saknis) {
             return;
         }
 
-        tevai = dabartinis;
         if (ieskPav < dabartinis -> data) {
            dabartinis = dabartinis -> kaire;
         } else {
@@ -125,4 +138,45 @@ void paieska (medis *saknis) {
     }
 
     cout<<"Pavardes nera."<<endl;
+}
+
+void salinimas (medis*& saknis) {
+    if (saknis == NULL) {
+        cout<<"Jokiu pavardziu dar nebuvo ivesta."<<endl;
+        return;
+    }
+
+    string pasalinPav;
+    cout<<"Kokia pavarde norite pasalinti?"<<endl;
+    cin>>pasalinPav;
+
+    medis* dabartinis = saknis;
+    medis* tevas = NULL;
+
+    while (dabartinis != NULL) {
+        if (pasalinPav == dabartinis->data) {
+
+            //jeigu elementas neturi vaiku
+            if (dabartinis -> kaire == NULL && dabartinis -> desine == NULL) {
+                if (dabartinis==saknis) {
+                    delete saknis;
+                    saknis = NULL;
+                } else if (tevas->kaire == dabartinis) {
+                    delete dabartinis;
+                    tevas->kaire = NULL;
+                } else {
+                    delete dabartinis;
+                    tevas->desine = NULL;
+                }
+            }
+            return;
+        }
+        tevas = dabartinis;
+        if (pasalinPav < dabartinis -> data) {
+            dabartinis = dabartinis -> kaire;
+        } else {
+            dabartinis = dabartinis -> desine;
+        }
+    }
+    cout<<"Pavarde buvo pasalinta!"<<endl;
 }
