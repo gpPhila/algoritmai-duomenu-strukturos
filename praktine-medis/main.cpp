@@ -226,6 +226,7 @@ void salinimas (medis*& saknis) {
                 cout << "Pavarde buvo pasalinta!" << endl;
                 return;
             }
+
             //jeigu elementas turi du vaikus
             else {
 
@@ -249,7 +250,7 @@ void salinimas (medis*& saknis) {
                     tempDabartinis->desine = naikinti->kaire;
                     delete naikinti;
                 }
-                dabartinis->data = tempDabartinis;
+                dabartinis->data = temp;
 
                 cout<<"Pavarde buvo pasalinta yahoo."<<endl;
                 return;
