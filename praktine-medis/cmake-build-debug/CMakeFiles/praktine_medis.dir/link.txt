@@ -1,3 +1,3 @@
-"D:\1\CLion 2024.3.2\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\praktine_medis.dir/objects.a
-"D:\1\CLion 2024.3.2\bin\mingw\bin\ar.exe" qc CMakeFiles\praktine_medis.dir/objects.a @CMakeFiles\praktine_medis.dir\objects1.rsp
-"D:\1\CLion 2024.3.2\bin\mingw\bin\g++.exe" -g -Wl,--whole-archive CMakeFiles\praktine_medis.dir/objects.a -Wl,--no-whole-archive -o praktine_medis.exe -Wl,--out-implib,libpraktine_medis.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\praktine_medis.dir\linkLibs.rsp
+"D:\coding\CLion\CLion 2024.2.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\praktine_medis.dir/objects.a
+"D:\coding\CLion\CLion 2024.2.1\bin\mingw\bin\ar.exe" qc CMakeFiles\praktine_medis.dir/objects.a @CMakeFiles\praktine_medis.dir\objects1.rsp
+"D:\coding\CLion\CLion 2024.2.1\bin\mingw\bin\g++.exe" -g -Wl,--whole-archive CMakeFiles\praktine_medis.dir/objects.a -Wl,--no-whole-archive -o praktine_medis.exe -Wl,--out-implib,libpraktine_medis.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\praktine_medis.dir\linkLibs.rsp

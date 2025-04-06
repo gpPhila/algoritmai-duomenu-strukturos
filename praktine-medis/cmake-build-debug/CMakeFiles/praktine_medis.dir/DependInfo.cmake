@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "D:/Coding/algoritmai-duomenu-strukturos/praktine-medis/main.cpp" "CMakeFiles/praktine_medis.dir/main.cpp.obj" "gcc" "CMakeFiles/praktine_medis.dir/main.cpp.obj.d"
+  "D:/coding/algoritmai-duomenu-strukturos/praktine-medis/main.cpp" "CMakeFiles/praktine_medis.dir/main.cpp.obj" "gcc" "CMakeFiles/praktine_medis.dir/main.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
