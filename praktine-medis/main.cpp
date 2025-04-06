@@ -3,6 +3,20 @@
 #include <string>
 using namespace std;
 
+struct eile {
+    string duom;
+    eile* pradzia;
+    eile* pabaiga;
+};
+eile* q = NULL;
+
+struct dekas {
+    string duom;
+    dekas *pries;
+    dekas *kitas;
+};
+dekas* pradzia = NULL;
+
 struct medis {
     string data;
     medis *kaire;
@@ -31,17 +45,27 @@ void iterpimas (medis*& saknis);
 void paieska (medis *saknis);
 void spausdinimas (medis *saknis);
 void salinimas (medis*& saknis);
+void perrasymasIDeka (medis*& saknis, dekas*& pradzia);
+void spausdintiDeka (dekas* pradzia);
+void perrasymasIDekoPabaiga (medis*& saknis, dekas*& pradzia);
+void isMedzioIEile (medis*& saknis, eile*& q);
+void spausditiEIle (eile* q);
 
 int main() {
     medis* saknis = NULL;
     int pasirinkimas;
-    while (pasirinkimas !=5) {
+    while (pasirinkimas !=10) {
         cout<<"Iveskite pasirinkto veiksmo numeri: "<<endl;
-        cout<<"1. Ivedimas."<<endl;
-        cout<<"2. Paieska."<<endl;
-        cout<<"3. Spausdinimas."<<endl;
+        cout<<"1. Ivedimas"<<endl;
+        cout<<"2. Paieska"<<endl;
+        cout<<"3. Spausdinimas"<<endl;
         cout<<"4. Salinimas"<<endl;
-        cout<<"5. Iseiti."<<endl;
+        cout<<"5. Nuo A iki L -> dekas"<<endl;
+        cout<<"6. Nuo R iki Z -> dekas"<<endl;
+        cout<<"7. Spausdinti deka"<<endl;
+        cout<<"8. Pasalinti nuo M iki P, ir -> eile"<<endl;
+        cout<<"9. Spausdinti eile"<<endl;
+        cout<<"10. Iseiti."<<endl;
         cin>>pasirinkimas;
 
         switch (pasirinkimas) {
@@ -57,8 +81,27 @@ int main() {
             case 4: salinimas(saknis);
             break;
 
-            case 5: cout<<"Jus isejote is meniu. Viso gero!"<<endl;
+            case 5: perrasymasIDeka(saknis,pradzia);
+                    spausdintiDeka(pradzia);
             break;
+
+            case 6: perrasymasIDekoPabaiga(saknis, pradzia);
+                    spausdintiDeka(pradzia);
+            break;
+
+            case 7: spausdintiDeka(pradzia);
+            break;
+
+            case 8: isMedzioIEile(saknis, q);
+                    spausditiEIle(q);
+            break;
+
+            case 9: spausditiEIle(q);
+            break;
+
+            case 10: cout<<"Jus isejote is meniu. Viso gero!"<<endl;
+            break;
+
 
             default: cout<<"Oopsie woopsie."<<endl;
         }
@@ -229,7 +272,6 @@ void salinimas (medis*& saknis) {
 
             //jeigu elementas turi du vaikus
             else {
-
                 medis* maxKaireje = rasti_max(dabartinis->kaire);
                 string temp = maxKaireje->data;
 
@@ -265,4 +307,116 @@ void salinimas (medis*& saknis) {
         }
     }
     cout << "Tokios pavardes nebuvo ivesta." << endl;
+}
+
+void perrasymasIDeka(medis*& saknis, dekas*& pradzia) {
+    if (saknis ==NULL) {
+        return;
+    }
+
+    //kaire-saknis-desine
+    perrasymasIDeka(saknis->kaire, pradzia);
+
+    char pirmaRaide = toupper(saknis->data[0]);
+    if (pirmaRaide >= 'A' && pirmaRaide <= 'L') {
+        //kuriamas naujas deko elementas
+        dekas* naujas = new dekas;
+        naujas->duom = saknis->data;
+        naujas->pries = NULL;
+        naujas->kitas = pradzia;
+
+        if (pradzia != NULL) {
+            pradzia->pries = naujas;
+        }
+        pradzia = naujas;
+    }
+    perrasymasIDeka(saknis->desine, pradzia);
+}
+
+void spausdintiDeka(dekas* pradzia) {
+    cout << "Deko elementai:" << endl;
+    dekas* temp = pradzia;
+    while (temp != NULL) {
+        cout << temp->duom << " ";
+        temp = temp->kitas;
+    }
+    cout << endl;
+}
+
+void perrasymasIDekoPabaiga(medis *&saknis, dekas *&pradzia) {
+    if (saknis ==NULL) {
+        return;
+    }
+    perrasymasIDekoPabaiga(saknis->kaire, pradzia);
+
+    //atskirai kuriamas naujas elementas ir veliau pridedamas i deko pabaiga
+    char pirmaRaide = toupper(saknis->data[0]);
+    if (pirmaRaide >= 'R' && pirmaRaide <= 'Z') {
+        dekas* naujas = new dekas;
+        naujas->duom = saknis->data;
+        naujas->pries = NULL;
+        naujas->kitas = NULL;
+
+        if (pradzia == NULL) {
+            pradzia = naujas;
+        } else {
+            dekas* temp = pradzia;
+            while (temp->kitas !=NULL) {
+                temp = temp->kitas;
+            }
+            temp->kitas = naujas;
+            naujas->pries = temp;
+        }
+    }
+    perrasymasIDekoPabaiga(saknis->desine, pradzia);
+}
+
+//SITAI FUNKCIJAS BUTINAS DEBUGGING
+void isMedzioIEile (medis*& saknis, eile*& q) {
+    if (saknis ==NULL) {
+        return;
+    }
+    isMedzioIEile(saknis->kaire, q);
+    char pirmaRaide = toupper(saknis->data[0]);
+    if (pirmaRaide >= 'M' && pirmaRaide <= 'P') {
+        eile* naujas = new eile;
+        naujas->duom = saknis->data;
+        naujas->pradzia = NULL;
+        naujas->pabaiga = NULL;
+
+        if (q == NULL) {
+            q = naujas;
+        }
+        else {
+            eile* temp = q;
+            while (temp->pabaiga != NULL) {
+                temp = temp->pabaiga;
+            }
+            temp->pabaiga = naujas;
+            naujas->pradzia = temp;
+        }
+
+        medis* temp = saknis;
+        if (saknis->kaire == NULL && saknis->desine == NULL) {
+            saknis = NULL;
+        } else if (saknis->kaire == NULL || saknis->desine == NULL) {
+            saknis = saknis->kaire != NULL ? saknis->kaire : saknis->desine;
+        } else {
+            medis* maxKaireje = rasti_max(saknis->kaire);
+            saknis->data = maxKaireje->data;
+            isMedzioIEile(saknis->kaire, q);
+        }
+        delete temp;
+    }
+    isMedzioIEile(saknis->desine, q);
+}
+
+void spausditiEIle(eile *q) {
+    eile* temp = q;
+    cout<<"Eiles elementai: ";
+    while (temp != NULL) {
+        cout << temp->duom << " ";
+        temp = temp->pabaiga;
+    }
+    cout<<endl;
 }
