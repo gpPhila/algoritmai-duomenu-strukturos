@@ -1,0 +1,3 @@
+D:/Coding/algoritmai-duomenu-strukturos/K3_Programa1/cmake-build-debug/CMakeFiles/K3_Programa1.dir
+D:/Coding/algoritmai-duomenu-strukturos/K3_Programa1/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Coding/algoritmai-duomenu-strukturos/K3_Programa1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
