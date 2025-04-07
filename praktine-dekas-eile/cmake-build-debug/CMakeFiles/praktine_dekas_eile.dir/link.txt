@@ -1,0 +1,3 @@
+"D:\1\CLion 2024.3.2\bin\cmake\win\x64\bin\cmake.exe" -E rm -f CMakeFiles\praktine_dekas_eile.dir/objects.a
+"D:\1\CLion 2024.3.2\bin\mingw\bin\ar.exe" qc CMakeFiles\praktine_dekas_eile.dir/objects.a @CMakeFiles\praktine_dekas_eile.dir\objects1.rsp
+"D:\1\CLion 2024.3.2\bin\mingw\bin\g++.exe" -g -Wl,--whole-archive CMakeFiles\praktine_dekas_eile.dir/objects.a -Wl,--no-whole-archive -o praktine_dekas_eile.exe -Wl,--out-implib,libpraktine_dekas_eile.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\praktine_dekas_eile.dir\linkLibs.rsp

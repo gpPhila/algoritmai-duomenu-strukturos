@@ -50,13 +50,76 @@ struct eile {
  };
 eile* q = NULL;
 
- void iterpimas (medis*& saknis);
- void paieska (medis *saknis);
+struct dekas {
+ int data;
+ dekas *kitas;
+};
+dekas* pradzia = NULL, *pabaiga = NULL;
+
+medis* iterpimas(medis* saknis, int skaicius) {
+ if (saknis == NULL) {
+  return naujas_elementas(skaicius);
+ }
+ if (skaicius < saknis->data) {
+  saknis->kaire = iterpimas(saknis->kaire, skaicius);
+ } else {
+  saknis->desine = iterpimas(saknis->desine, skaicius);
+ }
+ return saknis;
+}
+
+medis* paieska(medis *saknis, int x) {
+ if (saknis==NULL || saknis -> data==x) {
+  return saknis;
+ } else if (x>saknis -> data) {
+  return paieska(saknis -> desine, x);
+ } else {
+  return paieska(saknis -> kaire, x);
+ }
+}
+
+medis* panaikinti(medis *saknis, int x) {
+ if (saknis==NULL) {
+  return NULL;
+ }
+ if (x>saknis -> data) {
+  saknis->desine = panaikinti(saknis -> desine, x);
+ } else if (x<saknis -> data) {
+  saknis->kaire = panaikinti(saknis -> kaire, x);
+ } else {
+  if (saknis -> kaire==NULL && saknis -> desine==NULL) {
+   free(saknis);
+   return NULL;
+  } else if (saknis->kaire==NULL || saknis -> desine==NULL) {
+   medis *temp;
+   if (saknis -> kaire==NULL) {
+    temp = saknis -> desine;
+   } else {
+    temp = saknis -> kaire;
+   }
+   free(saknis);
+   return temp;
+
+   //tuo atveju kai elementas yra kazkur viduryje
+  } else {
+   medis *temp = rasti_max(saknis->kaire);
+   saknis->data = temp->data;
+   saknis->kaire = panaikinti(saknis -> kaire, temp->data);
+  }
+ }
+ return saknis;
+}
+
+ //void paieska (medis *saknis);
  void spausdinimas (medis *saknis);
- void salinimas (medis*& saknis);
+ //void salinimas (medis*& saknis);
  void irasymasIEile (medis *saknis, eile*& q);
  void spausdintiEile (eile* q);
+ void perrasymasIDekoPradzia (medis*& saknis, dekas*& pradzia, dekas*& pabaiga);
+ void perrasymasIDekoPabaiga (medis*& saknis, dekas*& pradzia, dekas*& pabaiga);
+ void spausdintiDeka (dekas* pradzia);
 
+int skaicius;
 int ieskSk;
 int pasalintiSk;
 int a, b, c;
@@ -70,21 +133,29 @@ int a, b, c;
    cout<<"3. Medzio spausdinimas"<<endl;
    cout<<"4. Salinimas is medzio"<<endl;
    cout<<"5. Intervalo [a; b] elementu irasymas i eile"<<endl;
-   cout<<"6. "<<endl;
-   cout<<"7. "<<endl;
+   cout<<"6. Intervalo [0; a] elementu perrasymas is medzio i deko pradzia"<<endl;
+   cout<<"7. Intervalo [b; c] elementu perrasymas is medzio i deko pabaiga"<<endl;
    cout<<"8. Spausdinti eile"<<endl;
-   cout<<"9. "<<endl;
+   cout<<"9. Spausdinti deka"<<endl;
    cout<<"10. Iseiti"<<endl;
    cin>>pasirinkimas;
 
    switch (pasirinkimas) {
-    case 1: iterpimas(saknis);
-            cout<<"Skaicius buvo irasytas i medi"<<endl;
+    case 1:
+     int medzioDydis;
+     cout<<"Kiek skaiciu norite ivesti? "<<endl;
+    cin>>medzioDydis;
+
+    for (int i = 0; i < medzioDydis; i++) {
+     cin>>skaicius;
+     saknis = iterpimas(saknis, skaicius);
+    }
+    cout<<"Skaiciai buvo irasyti i medi."<<endl;
     break;
 
     case 2: cout<<"Kokio skaiciaus ieskome?"<<endl;
             cin>>ieskSk;
-            paieska(saknis);
+            saknis = paieska(saknis, ieskSk);
     break;
 
 
@@ -94,7 +165,6 @@ int a, b, c;
 
     case 4:  cout<<"Koki skaiciu norite pasalinti? "<<endl;
              cin>>pasalintiSk;
-             salinimas(saknis);
     break;
 
     case 5: cout<<"Iveskite intervala [a; b] - visi jam priklausantys skaiciai bus irasyti i eile"<<endl;
@@ -102,7 +172,22 @@ int a, b, c;
             irasymasIEile(saknis, q);
     break;
 
+    case 6:
+            cout<<"Iveskite intevalo [0; a] a: "<<endl;
+            cin>>a;
+            cout<<endl;
+            perrasymasIDekoPradzia(saknis, pradzia, pabaiga);
+    break;
+
+    case 7: cout<<"Iveskite intevala [b; c] "<<endl;
+            cin>>b>>c;
+            perrasymasIDekoPabaiga(saknis, pradzia, pabaiga);
+    break;
+
     case 8: spausdintiEile(q);
+    break;
+
+    case 9: spausdintiDeka(pradzia);
     break;
 
     case 10: cout<<"Jus isejote is meniu. Viso gero!"<<endl;
@@ -114,38 +199,6 @@ int a, b, c;
   return 0;
  }
 
- void iterpimas(medis*& saknis) {
-  int skaicius;
-  cout<<"Iveskite skaiciu: ";
-  cin>>skaicius;
-
-  medis* naujas = naujas_elementas(skaicius);
-
-  if (saknis ==NULL) {
-   saknis = naujas;
-   return;
-  }
-
-  medis* dabartinis = saknis;
-  medis* tevas = NULL;
-
-  while (dabartinis != NULL) {
-
-   tevas = dabartinis;
-   if (skaicius < dabartinis->data) {
-    dabartinis = dabartinis->kaire;
-   } else {
-    dabartinis = dabartinis->desine;
-   }
-  }
-
-  if (skaicius < tevas->data) {
-   tevas->kaire = naujas;
-  } else {
-   tevas->desine = naujas;
-  }
- }
-
 void spausdinimas(medis *saknis) {
   if (saknis != NULL) {
    spausdinimas(saknis->kaire);
@@ -153,7 +206,7 @@ void spausdinimas(medis *saknis) {
    spausdinimas(saknis->desine);
   }
  }
-
+/*
 void paieska (medis *saknis) {
   if (saknis == NULL) {
    cout<<"Jokiu skaiciu dar nebuvo ivesta."<<endl;
@@ -262,6 +315,7 @@ void salinimas (medis*& saknis) {
   }
   cout << "Tokio skaiciaus nera medyje." << endl;
  }
+*/
 
 void irasymasIEile (medis* saknis, eile*& q) {
   if (saknis ==NULL) {
@@ -288,6 +342,61 @@ void irasymasIEile (medis* saknis, eile*& q) {
 
 void spausdintiEile (eile* q) {
   elem* temp = q->pradzia;
+  while (temp != NULL) {
+   cout << temp->data << " ";
+   temp = temp->kitas;
+  }
+  cout << endl;
+ }
+
+void perrasymasIDekoPradzia (medis*& saknis, dekas*& pradzia, dekas*& pabaiga) {
+  if (saknis ==nullptr) {
+   return;
+  }
+
+  perrasymasIDekoPradzia(saknis->kaire, pradzia, pabaiga);
+  medis* desineje = saknis->desine;
+  perrasymasIDekoPradzia(desineje, pradzia, pabaiga);
+
+  if (saknis->data >= 0 && saknis->data <= a) {
+   dekas* naujas = new dekas;
+   naujas->data = saknis->data;
+   naujas->kitas = pradzia;
+
+   if (pradzia == nullptr) {
+    pabaiga = naujas;
+   }
+   pradzia = naujas;
+  }
+ }
+
+
+void perrasymasIDekoPabaiga (medis*& saknis, dekas*& pradzia, dekas*& pabaiga) {
+  if (saknis ==nullptr) {
+   return;
+  }
+
+  perrasymasIDekoPabaiga(saknis->kaire, pradzia, pabaiga);
+  medis* desineje = saknis->desine;
+  perrasymasIDekoPabaiga(desineje, pradzia, pabaiga);
+
+  if (saknis->data >= b && saknis->data <= c) {
+   dekas* naujas = new dekas;
+   naujas->data = saknis->data;
+   naujas->kitas = nullptr;
+
+   if (pabaiga == nullptr) {
+    pradzia = pabaiga = naujas;
+   } else {
+    pabaiga->kitas = naujas;
+    pabaiga = naujas;
+   }
+  }
+ }
+
+void spausdintiDeka (dekas* pradzia) {
+  cout << "Deko elementai:" << endl;
+  dekas* temp = pradzia;
   while (temp != NULL) {
    cout << temp->data << " ";
    temp = temp->kitas;
