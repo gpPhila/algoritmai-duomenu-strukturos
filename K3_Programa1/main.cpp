@@ -77,9 +77,11 @@ medis* panaikinti(medis *saknis, int x) {
  } else if (x<saknis -> data) {
   saknis->kaire = panaikinti(saknis -> kaire, x);
  } else {
+  //jeigu isvis nera elementu po saknies
   if (saknis -> kaire==NULL && saknis -> desine==NULL) {
    free(saknis);
    return NULL;
+   //jeigu arba desineje arba kaireje nera elemento
   } else if (saknis->kaire==NULL || saknis -> desine==NULL) {
    medis *temp;
    if (saknis -> kaire==NULL) {
@@ -93,12 +95,17 @@ medis* panaikinti(medis *saknis, int x) {
    //tuo atveju kai elementas yra kazkur viduryje
   } else {
    medis *temp = rasti_max(saknis->kaire);
+
+   //reikia pakeisti (todelete) elemento reiksme su didziausiu elementu
    saknis->data = temp->data;
+
+   //naikiname ji nes jis buvo nupokijuotas kitur
    saknis->kaire = panaikinti(saknis -> kaire, temp->data);
   }
  }
  return saknis;
 }
+
  void paieska (medis *saknis);
  void spausdinimas (medis *saknis);
  void irasymasIEile (medis *saknis, eile*& q);
