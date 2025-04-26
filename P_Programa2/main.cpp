@@ -22,7 +22,7 @@ struct vienkryptCiklinisSarasas {
 vienkryptCiklinisSarasas *pradziaVienCikl = nullptr, *pabaigaVienCikl = nullptr; //realizuotas kaip dekas
 
 void iterpimas (dvikryptCiklinisSarasas*& pradziaDvikCikl);
-void salinimas();
+void salinimas(dvikryptCiklinisSarasas*& pradziaDvikCikl);
 void spausdinimas ();
 void paieska();
 void perkelimasIPradzia();
@@ -47,6 +47,12 @@ int main()
             break;
 
             case 2: spausdinimas();
+            break;
+
+            case 3: paieska();
+            break;
+
+            case 4: salinimas(pradziaDvikCikl);
             break;
 
             case 7: cout<<"Jus isejote is meniu."<<endl;
@@ -95,17 +101,58 @@ void paieska() {
     int elem;
     cout<<"Kokio elemento ieskome?"<<endl;
     cin>>elem;
+    bool rastas = false;
 
-    if (pradziaDvikCikl -> duom == elem) {
+        dvikryptCiklinisSarasas *temp = pradziaDvikCikl;
+        do {
+            if (temp -> duom == elem) {
+                rastas = true;
+                break;
+            }
+            temp = temp -> pirmyn;
+        } while (temp != pradziaDvikCikl);
+
+    if (rastas == true) {
         cout<<"Elementas buvo rastas!"<<endl;
-        return;
+    } else {
+        cout<<"Tokio elemento nera sarase."<<endl;
     }
+}
+
+void salinimas(dvikryptCiklinisSarasas*& pradziaDvikCikl) {
+    spausdinimas();
+    int salinamas;
+    cout<<"Iveskite, koki elementa norite pasalinti: ";
+    cin>>salinamas;
 
     dvikryptCiklinisSarasas *temp = pradziaDvikCikl;
     do {
-
+        if (temp -> duom == salinamas) {
+            //vienintelis elementas
+            if (temp == pradziaDvikCikl && temp -> pirmyn == pradziaDvikCikl) {
+                delete temp;
+                pradziaDvikCikl = nullptr;
+            }
+            //pirmas elementas
+            else if (temp == pradziaDvikCikl) {
+                temp->atgal -> pirmyn = temp -> pirmyn;
+                temp->pirmyn -> atgal = temp -> atgal;
+                pradziaDvikCikl = temp -> pirmyn;
+                delete temp;
+            } else {
+                temp -> atgal -> pirmyn = temp -> pirmyn;
+                temp -> pirmyn -> atgal = temp -> atgal;
+                delete temp;
+            }
+            cout<<"Elementas buvo pasalintas!"<<endl;
+            return;
+        }
         temp = temp -> pirmyn;
     } while (temp != pradziaDvikCikl);
-    cout<<endl;
 }
 
+void perkelimasIPradzia(dvikryptCiklinisSarasas*& pradziaDvikCikl) {
+    while (pradziaDvikCikl -> pirmyn != nullptr) {
+        
+    }
+}
