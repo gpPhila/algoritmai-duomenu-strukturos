@@ -7,12 +7,26 @@ realizuojant jį kaip eilę. Atspausdinti visus dvikrypčio sąrašo elementus.
 #include <iostream>
 using namespace std;
 
+struct elem {
+    elem *pirmyn;
+    int duom;
+    elem *atgal;
+};
+
+struct eile {
+    int dydis;
+    elem *pradzia;
+    elem *pabaiga;
+};
+eile* q = NULL;
+
 struct medis {
     int key;
     medis *kaire;
     medis *desine;
     int dydis;
 };
+medis *saknis = NULL;
 
 medis *naujasElementas (int key) {
     medis *medis1=new medis;
@@ -86,7 +100,7 @@ medis *iterpimas(medis *medis, int key) {
     if (balansas > 1 && key < medis->kaire->key) {
         return desinePosukis(medis);
     }
-    if (balansas < 1 && key > medis->desine->key) {
+    if (balansas < -1 && key > medis->desine->key) {
         return kairePosukis(medis);
     }
     if (balansas > 1 && key > medis->kaire->key) {
@@ -126,7 +140,7 @@ medis *salinimas(medis *saknis, int key) {
                 saknis = NULL;
             } else {
                 *saknis = *temp;
-                free(temp);
+                delete temp;
             }
         } else {
             medis *temp = minimumas(saknis->desine);
@@ -159,11 +173,129 @@ medis *salinimas(medis *saknis, int key) {
     return saknis;
 }
 
-void spausdinimas(medis *saknis) {
-    if (saknis==NULL) {
-        cout<<"Elementu nera."<<endl;
+void spausdinimas(medis *saknis);
+void perkelimas (medis* saknis, eile*& q);
+void paieska (medis *saknis);
+void spausdintiEile ();
+int ieskSk;
+int skaicius;
+int pasalintiSk;
+
+int main() {
+    int pasirinkimas;
+    while (pasirinkimas !=7) {
+        cout<<"Iveskite pasirinkto veiksmo numeri: "<<endl;
+        cout<<"1. Iterpimas."<<endl;
+        cout<<"2. Spausdinimas."<<endl;
+        cout<<"3. Paieska."<<endl;
+        cout<<"4. Salinimas."<<endl;
+        cout<<"5. Visu elementu perkelimas is medzio i dvikrypti sarasa (eile)."<<endl;
+        cout<<"6. Eiles elementu spausdinimas."<<endl;
+        cout<<"7. Iseiti."<<endl;
+        cin>>pasirinkimas;
+
+        switch (pasirinkimas) {
+            case 1:
+                int medzioDydis;
+                cout<<"Kiek skaiciu norite ivesti? "<<endl;
+                cin>>medzioDydis;
+                cout<<"Iveskite visus skaicius (per tarpa): "<<endl;
+                for (int i = 0; i < medzioDydis; i++) {
+                    cin>>skaicius;
+                    saknis = iterpimas(saknis, skaicius);
+                }
+                cout<<"Skaiciai buvo irasyti i medi."<<endl;
+            break;
+
+            case 2:
+                cout<<"Medzio elementai: "<<endl;
+                if (saknis == NULL) {
+                    cout<<"Elementu nera."<<endl;
+                }
+                spausdinimas(saknis);
+                cout<<endl;
+            break;
+
+            case 3:
+                cout<<"Kokio elemento ieskome?"<<endl;
+                cin>>ieskSk;
+                paieska(saknis);
+            break;
+
+            case 4:
+                cout<<"Koki skaiciu norite pasalinti?"<<endl;
+                cin>>pasalintiSk;
+                saknis = salinimas(saknis, pasalintiSk);
+                cout<<"Skaicius buvo pasalintas."<<endl;
+            break;
+
+            case 5:
+                perkelimas(saknis, q);
+                while (saknis != NULL) {
+                    saknis = salinimas(saknis, saknis->key);
+                }
+                cout<<"Visi medzio elementai buvo perkelti i eile."<<endl;
+            break;
+
+            case 6:
+                spausdintiEile();
+            break;
+
+            case 7: cout<<"Jus isejote is meniu."<<endl;
+            break;
+
+            default: cout<<"Tokio pasirinkimo nera."<<endl;
+        }
+    }
+    return 0;
+}
+
+void paieska (medis *saknis) {
+    if (saknis == NULL) {
+        cout<<"Jokiu skaiciu dar nebuvo ivesta."<<endl;
+        return;
     }
 
+    medis* dabartinis = saknis;
+    while (dabartinis != NULL) {
+
+        if (ieskSk == dabartinis->key) {
+            cout << "Skaicius yra rastas!" << endl;
+            return;
+        }
+        if (ieskSk < dabartinis -> key) {
+            dabartinis = dabartinis -> kaire;
+        } else {
+            dabartinis = dabartinis -> desine;
+        }
+    }
+    cout<<"Tokio skaiciaus medyje nera."<<endl;
+}
+
+void perkelimas (medis* saknis, eile*& q) {
+    if (saknis == NULL) {
+        return;
+    }
+
+    perkelimas(saknis->kaire, q);
+
+    elem* naujas = new elem;
+    naujas->duom = saknis->key;
+    naujas->pirmyn = nullptr;
+    naujas->atgal = nullptr;
+
+    if (q == NULL) {
+        q = new eile;
+        q->pradzia = naujas;
+        q->pabaiga = naujas;
+    } else {
+        q->pabaiga->pirmyn = naujas;
+        q->pabaiga = naujas;
+    }
+    perkelimas(saknis->desine, q);
+}
+
+void spausdinimas(medis *saknis) {
     if (saknis != NULL) {
         spausdinimas(saknis->kaire);
         cout<<saknis->key<<" ";
@@ -171,7 +303,18 @@ void spausdinimas(medis *saknis) {
     }
 }
 
-int main() {
+void spausdintiEile() {
+    cout<<"Eiles elementai: "<<endl;
 
-    return 0;
+    if (q == NULL) {
+        cout<<"Elementu nera."<<endl;
+        return;
+    }
+
+    elem* temp = q->pradzia;
+    while (temp != NULL) {
+        cout << temp->duom << " ";
+        temp = temp->pirmyn;
+    }
+    cout << endl;
 }
