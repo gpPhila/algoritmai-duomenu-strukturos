@@ -9,21 +9,31 @@ Sukurti loginę funkciją Ivesti(P), kuri įveda daugianarį iš tekstinio failo
 
 using namespace std;
 
+struct sarasas {
+    int duom;
+    sarasas *kitas;
+};
+sarasas *pradzia = nullptr, *pabaiga = nullptr;
+
 void daugianIvedimas ();
-bool ivesti();
+void ivesti();
 
 int main () {
     int pasirinkimas;
     while (pasirinkimas !=3) {
         cout<<"Iveskite pasirinkto veiksmo numeri: "<<endl;
         cout<<"1. Daugianariu ivedimas i tekstini faila."<<endl;
-        cout<<"2. ."<<endl;
+        cout<<"2. Daugianario ivedimas is tekstinio failo i sarasa."<<endl;
         cout<<"3. Iseiti."<<endl;
         cin>>pasirinkimas;
 
         switch (pasirinkimas) {
             case 1:
                 daugianIvedimas();
+            break;
+
+            case 2:
+                ivesti();
             break;
 
             case 3:
@@ -39,7 +49,8 @@ int main () {
 
 void daugianIvedimas () {
     int k, skaicius, laipsnis;
-    ofstream failas("daugianaris.txt");
+    ofstream failas;
+    failas.open("daugianaris.txt");
 
     cout<<"Kiek kartu norite ivesti?"<<endl;
     cin>>k;
@@ -52,4 +63,45 @@ void daugianIvedimas () {
         failas << skaicius << " " << laipsnis << endl;
     }
     failas.close();
+
+    cout<<"Skaiciai su laipsniais buvo irasyti i tekstini faila."<<endl;
+}
+
+void ivesti() {
+    ifstream failas;
+    failas.open("daugianaris.txt");
+
+    int skaicius, laipsnis;
+    while (failas >> skaicius >> laipsnis) {
+        if (skaicius == 0) {
+            continue;
+        }
+
+        sarasas *naujasSk = new sarasas {laipsnis, nullptr};
+        if (pradzia == nullptr) {
+            pradzia = naujasSk;
+        } else {
+            sarasas *temp = pradzia;
+            while (temp->kitas !=nullptr) {
+                temp = temp->kitas;
+            }
+            temp->kitas = naujasSk;
+        }
+        sarasas *naujasLap = new sarasas(skaicius, nullptr);
+        sarasas *temp = pradzia;
+        while (temp->kitas !=nullptr) {
+            temp = temp->kitas;
+        }
+        temp->kitas = naujasLap;
+    }
+
+    failas.close();
+
+    cout<<"Saraso duomenys: "<<endl;
+    sarasas *temp = pradzia;
+    while (temp != nullptr) {
+        cout << temp->duom << " ";
+        temp = temp->kitas;
+    }
+    cout << endl;
 }
