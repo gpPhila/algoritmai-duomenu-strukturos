@@ -49,10 +49,10 @@ void ivedimas () {
     cout<<"Kiek skaiciu turi buti ivesta i sarasa?"<<endl;
     cin>>kiekis;
 
-    srand(time(0));
+    srand(time(0)); //reset'ina skaiciu seka, be jo po kiekvieno programos iskvietimo butu tie patys skaiciai
 
     for (int i = 0; i < kiekis; i++) {
-            int atsitiktinisSk = rand() % 100 + 1;
+            int atsitiktinisSk = rand() % 100 + 1; //nuo 1 iki 100
 
             sarasas *naujas = new sarasas;
             naujas->duom = atsitiktinisSk;
@@ -93,4 +93,26 @@ void suma () {
 
     cout<<"Didziausias elementas: "<<did<<endl;
     cout<<"Maziausias elementas: "<<maz<<endl;
+
+    sarasas *pradeti =nullptr, *baigti =nullptr;
+
+    temp = pradzia;
+    while (temp) {
+        if (!pradeti && (temp->duom == maz || temp->duom == did)) {
+            pradeti = temp;
+        } else if (pradeti && (temp->duom == maz || temp->duom == did) && temp->duom != pradeti->duom) {
+            baigti = temp;
+            break;
+        }
+        temp = temp->kitas;
+    }
+
+    int suma = 0;
+    temp = pradeti->kitas;
+    while (temp && temp != baigti) {
+        suma += temp->duom;
+        temp = temp->kitas;
+    }
+
+    cout<<"Suma tarp elementu "<<pradeti->duom<<" ir "<<baigti->duom<<": "<<suma<<endl;
 }
