@@ -1,0 +1,3 @@
+D:\1\CMake\bin\cmake.exe -E rm -f CMakeFiles\K4_Programa1.dir/objects.a
+"D:\coding\CLion\CLion 2024.2.1\bin\mingw\bin\ar.exe" qc CMakeFiles\K4_Programa1.dir/objects.a @CMakeFiles\K4_Programa1.dir\objects1.rsp
+"D:\coding\CLion\CLion 2024.2.1\bin\mingw\bin\g++.exe" -g -Wl,--whole-archive CMakeFiles\K4_Programa1.dir/objects.a -Wl,--no-whole-archive -o K4_Programa1.exe -Wl,--out-implib,libK4_Programa1.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\K4_Programa1.dir\linkLibs.rsp
