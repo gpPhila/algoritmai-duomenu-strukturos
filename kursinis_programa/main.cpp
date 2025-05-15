@@ -186,7 +186,7 @@ int main() {
 
                 auto duration3 = chrono::duration_cast<chrono::milliseconds>(end3 - start3);
                 double seconds3 = duration3.count() / 1000.0;
-                cout << "Rikiavimo laikas (atvirksciai surusiuoti duomenys): " << seconds3 << " sek." << std::endl;
+                cout << "Rikiavimo laikas (is anksto surusiuoti duomenys): " << seconds3 << " sek." << std::endl;
                 */
                 ofstream isvedimas3("tarpinis_rezultatas3.txt");
                 for (int i = 0; i < kiekis; ++i) {
