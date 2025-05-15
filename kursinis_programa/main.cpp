@@ -29,44 +29,14 @@ void Bubble_Sort_atv (int array[ ], int length)
     {flag = 0;
         for (j=0; j < (length -i -1); j++)
         {if (array [j+1] > array[j])
-        { temp = array [j];// elementų sukeitimas
+        { temp = array [j];
             array [j] = array [j+1];
             array [j+1] = temp;
-            flag = 1;// Ar buvo nors vienas sukeitimas?
+            flag = 1;
         }
         }
     }
 }
-/*
-void quickSort(int arr[ ], int left, int right) {
-    int i = left, j = right;       int tmp;
-    int pivot = arr[(left + right) / 2];
-    while (i <= j)
-    {  // partition
-        while (arr[i] < pivot)
-            i++;
-        while (arr[j] > pivot)
-            j--;
-        if (i <= j)
-        {  tmp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = tmp;
-            i++;
-            j--;
-        }
-    }
-    if (left < j) {
-        quickSort(arr, left, j);
-    }
-    if (i < right) {
-        quickSort(arr, i, right);
-    }
-}
-*/
-
-void rikiavimas1();
-void rikiavimas2();
-void rikiavimas3();
 
 int main() {
 
@@ -141,7 +111,6 @@ int main() {
                 failas1.close();
 
                 //paprastas random duomenu rikiavimas----------------------------------
-
                 clock_t start = clock();
                 Bubble_Sort(masyvas1, kiekis, swaps1);
                 clock_t end = clock();
@@ -188,7 +157,7 @@ int main() {
                 double seconds2 = duration2.count() / 1000.0;
                 cout << "Rikiavimo laikas (atvirksciai surusiuoti duomenys): " << seconds2 << " sek." << std::endl;
                 */
-                ofstream isvedimas2("t_r2.txt");
+                ofstream isvedimas2("tarpinis_rezultatas2.txt");
                 for (int i = 0; i < kiekis; ++i) {
                     isvedimas2 << masyvas2[i] << endl;
                 }
@@ -219,7 +188,7 @@ int main() {
                 double seconds3 = duration3.count() / 1000.0;
                 cout << "Rikiavimo laikas (atvirksciai surusiuoti duomenys): " << seconds3 << " sek." << std::endl;
                 */
-                ofstream isvedimas3("t_r3.txt");
+                ofstream isvedimas3("tarpinis_rezultatas3.txt");
                 for (int i = 0; i < kiekis; ++i) {
                     isvedimas3 << masyvas3[i] << endl;
                 }
