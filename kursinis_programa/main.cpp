@@ -1,11 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include <ctime>
+//#include <chrono>
 using namespace std;
 
-void Bubble_Sort (int array[ ], int length)
+void Bubble_Sort (int array[ ], int length, long long& swap_count)
 {  int i, j, flag = 1;
     int temp;
+    swap_count = 0;
     for(i = 0; (i < length-1 ) && flag; i++)
     {flag = 0;
         for (j=0; j < (length -i -1); j++)
@@ -13,6 +15,7 @@ void Bubble_Sort (int array[ ], int length)
         { temp = array [j];// elementų sukeitimas
             array [j] = array [j+1];
             array [j+1] = temp;
+            swap_count++;
             flag = 1;// Ar buvo nors vienas sukeitimas?
         }
         }
@@ -81,7 +84,7 @@ int main() {
         failas << number << endl;
     }
     failas.close();
-    cout << "Random duomenys buvo ivesti." << endl;
+    cout << "Atsitiktiniai duomenys buvo ivesti." << endl;
 
     //atvirksciai surikiuoti tie pat random skaiciai----------------------------
     int masyvasATV[100000];
@@ -99,13 +102,14 @@ int main() {
     cout << "Atvirksciai surikiuoti duomenys buvo ivesti." << endl;
 
     //IS anksto Surikiuoti skaiciai----------------------------------------
+    long long swaps1 = 0;
     int masyvasSur[100000];
     ifstream data("data.txt");
     for (int i = 0; i < 100000; ++i) {
         data >> masyvasSur[i];
     }
     data.close();
-    Bubble_Sort(masyvasSur, 100000);
+    Bubble_Sort(masyvasSur, 100000, swaps1);
     ofstream isvedimasSur("surusiuota_data.txt");
     for (int i = 0; i < 100000; ++i) {
         isvedimasSur << masyvasSur[i] << endl;
@@ -137,13 +141,22 @@ int main() {
                 failas1.close();
 
                 //paprastas random duomenu rikiavimas----------------------------------
+
                 clock_t start = clock();
-                Bubble_Sort(masyvas1, kiekis);
+                Bubble_Sort(masyvas1, kiekis, swaps1);
                 clock_t end = clock();
                 cout << "Rikiavimo laikas (nesurusiuoti duomenys): " << double(end - start) / CLOCKS_PER_SEC << " sek." << endl;
+                cout << "Elementu suketimo vietomis skaicius (nesurusiuoti duomenys): " << swaps1 << endl;
 
-                double duration_ms = 1000.0 * (end - start) / CLOCKS_PER_SEC;
-                cout << "Rikiavimo laikas (nesurusiuoti duomenys): " << duration_ms << " ms."<<endl;
+                /*
+                auto start = chrono::high_resolution_clock::now();
+                Bubble_Sort(masyvas1, kiekis);
+                auto end = chrono::high_resolution_clock::now();
+
+                auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
+                double seconds = duration.count() / 1000.0;
+                cout << "Rikiavimo laikas (nesurusiuoti duomenys): " << seconds << " sek." << std::endl;
+                */
                 ofstream isvedimas1("tarpinis_rezultatas.txt");
                 for (int i = 0; i < kiekis; ++i) {
                     isvedimas1 << masyvas1[i] << endl;
@@ -152,19 +165,29 @@ int main() {
 
                 //atvirksciai surikiuotu duomenu rikiavimas---------------------------
 
+                long long swaps2 = 0;
                 ifstream failas2("atv_surus_data.txt");
                 for (int i = 0; i < kiekis; ++i) {
                     failas2 >> masyvas2[i];
                 }
                 failas2.close();
 
+
                 clock_t start2 = clock();
-                Bubble_Sort(masyvas2, kiekis);
+                Bubble_Sort(masyvas2, kiekis, swaps2);
                 clock_t end2 = clock();
                 cout << "Rikiavimo laikas (atvirksciai surusiuoti duomenys): " << double(end2 - start2) / CLOCKS_PER_SEC << " sek." << endl;
+                cout << "Elementu suketimo vietomis skaicius (atvirksciai surusiuoti duomenys): " << swaps2 << endl;
 
-                double duration_ms1 = 1000.0 * (end2 - start2) / CLOCKS_PER_SEC;
-                cout << "Rikiavimo laikas (atvirksciai surusiuoti duomenys): " << duration_ms1 << " ms."<<endl;
+                /*
+                auto start2 = chrono::high_resolution_clock::now();
+                Bubble_Sort(masyvas2, kiekis);
+                auto end2 = chrono::high_resolution_clock::now();
+
+                auto duration2 = chrono::duration_cast<chrono::milliseconds>(end2 - start2);
+                double seconds2 = duration2.count() / 1000.0;
+                cout << "Rikiavimo laikas (atvirksciai surusiuoti duomenys): " << seconds2 << " sek." << std::endl;
+                */
                 ofstream isvedimas2("t_r2.txt");
                 for (int i = 0; i < kiekis; ++i) {
                     isvedimas2 << masyvas2[i] << endl;
@@ -173,19 +196,29 @@ int main() {
 
                 //is anksto surikiuotu duomenu rikiavimas-----------------------------------
 
+                long long swaps3 = 0;
                 ifstream failas3("surusiuota_data.txt");
                 for (int i = 0; i < kiekis; ++i) {
                     failas3 >> masyvas3[i];
                 }
                 failas3.close();
 
+
                 clock_t start3 = clock();
-                Bubble_Sort(masyvas3, kiekis);
+                Bubble_Sort(masyvas3, kiekis, swaps3);
                 clock_t end3 = clock();
                 cout << "Rikiavimo laikas (is anksto surusiuoti duomenys): " << double(end3 - start3) / CLOCKS_PER_SEC << " sek." << endl;
+                cout << "Elementu suketimo vietomis skaicius (is anksto surusiuoti duomenys): " << swaps3 << endl;
 
-                double duration_ms2 = 1000.0 * (end3 - start3) / CLOCKS_PER_SEC;
-                cout << "Rikiavimo laikas (is anksto surusiuoti duomenys): " << duration_ms2 << " ms."<<endl;
+                /*
+                auto start3 = chrono::high_resolution_clock::now();
+                Bubble_Sort(masyvas3, kiekis);
+                auto end3 = chrono::high_resolution_clock::now();
+
+                auto duration3 = chrono::duration_cast<chrono::milliseconds>(end3 - start3);
+                double seconds3 = duration3.count() / 1000.0;
+                cout << "Rikiavimo laikas (atvirksciai surusiuoti duomenys): " << seconds3 << " sek." << std::endl;
+                */
                 ofstream isvedimas3("t_r3.txt");
                 for (int i = 0; i < kiekis; ++i) {
                     isvedimas3 << masyvas3[i] << endl;
